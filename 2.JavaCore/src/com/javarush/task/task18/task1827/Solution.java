@@ -1,11 +1,7 @@
 package com.javarush.task.task18.task1827;
 
-
 import java.io.*;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /* 
@@ -13,21 +9,32 @@ import java.util.List;
 */
 
 public class Solution {
+
     public static void main(String[] args) throws Exception {
+        if (args.length == 0) return;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter writer;
+        String path = reader.readLine();
+        reader.close();
+
+        String param = args[0];
+        String productName = args[1];
+        String price = args[2];
+        String quantity = args[3];
         int id = 0;
-        //String[] param = args[0].split(" ");
 
-        BufferedReader reader;
-        //reader = new BufferedReader(new InputStreamReader(System.in));
-        String filePath = "E:\\IntellijIDEAProjects\\JavaRushTasks\\2.JavaCore\\src\\com\\javarush\\task\\task18\\task1827\\tables.txt";
-        //reader.close();
-
-        reader = new BufferedReader(new FileReader(filePath));
-
-        String[] pars = reader.readLine().replaceAll("[а-яА-Я]", "").split(" ");
-        System.out.println(Arrays.toString(pars));
-
-
-
+        if(param.equals("-c")){
+            reader = new BufferedReader(new FileReader(path));
+            while (reader.ready()){
+                int tempId = Integer.parseInt(reader.readLine().substring(0, 8).trim());
+                id = tempId > id ? tempId : id;
+            }
+            reader.close();
+            writer = new BufferedWriter(new FileWriter(path, true));
+            writer.write("\n");
+            writer.write(String.format("%-8d%-30.30s%-8.8s%-4.4s", ++id, productName, price, quantity));
+            writer.close();
+        }
     }
+
 }
